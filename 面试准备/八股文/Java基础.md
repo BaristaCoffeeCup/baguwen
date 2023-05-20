@@ -1,0 +1,106 @@
+### Java语言的特点
+1. 简单易学，具备丰富的类库
+2. 面向对象：Java是一门面向对象的语言，支持封装，多态，继承等特性
+3. 跨平台性：Java得益于Java虚拟机，可以运行在Linux，Windows等多个不同系统上
+4. 支持多线程：Java支持多线程编程，支持程序多线程运作，提高程序性能
+5. 垃圾回收机制：Java虚拟机采用优秀的垃圾回收机制，可以减少程序员对内存额额外操作
+6. 安全性：Java限制程序对系统资源的访问
+##
+
+
+### Java自动装箱和自动拆箱
+Java自动装箱和自动拆箱是指Java中基本数据类型（如int、double等）和对应的包装类（如Integer、Double等）之间的自动转换。
+自动装箱是指将基本数据类型自动转换为对应的包装类，例如：
+```Java
+int i = 123;
+Integer integer = i; // 自动装箱
+```
+自动拆箱则是指将包装类自动转换为对应的基本数据类型，例如：
+```Java
+Integer integer = 123;
+int i = integer; // 自动拆箱
+```
+##
+
+### 重写和重载的区别
+#### 重写
+1. 发生在父类和子类之间：子类可以对继承的父类的成员方法进行逻辑重写
+2. 重写的方法名，入参类型，出参类型必须相同（子类重写的方法的出参类型是父类方法出参类型的子类也是可以的）
+3. 访问修饰符的限制必须大于被重写方法的访问修饰符的限制（public > private > default > protected）
+4. 重写方法不能抛出比被重写方法更加宽泛的异常
+#### 重载
+1. 在同一个类中，多个同名成员方法，但是入参类型，个数，顺序均不相同
+2. 重载方法的返回类型可以相同也可以不同，不能根据返回类型判断是否为重载
+##
+
+### == 与 equal 的区别
+Java中的"=="是比较两个变量所存储的内存地址是否相同，也就是比较它们是否指向同一个对象。而"equals()"方法是用来比较两个对象的内容是否相等。
+
+举个例子，如果有一个String类型的变量str1和另一个String类型的变量str2，使用"=="比较它们，会比较它们所存储的内存地址是否相同；而使用"equals()"方法比较它们，会比较它们所包含的字符串内容是否相同。
+```java
+String str1 = "hello";
+String str2 = new String("hello");
+System.out.println(str1 == str2); // false
+System.out.println(str1.equals(str2)); // true
+```
+##
+
+### HashCode的作用
+1. 集合类中判断两个对象是否相等
+2. 快速定位某个对象的存储位置
+##
+
+### String、String StringBuffer 和 StringBuilder 的区别
+1. String是对象，底层是final修饰的字符数组，不可修改
+2. StringBuilder和StringBuffer都继承了AbstractStringBuilder，底层是可变字符数组
+3. StringBuffer增加了方法同步锁，是线程安全的
+##
+
+### ArrayList和linkedList的区别
+ArrayList和LinkedList都是Java中的数据结构，用于存储和操作集合元素。它们的主要区别在于底层数据结构和性能。
+1. 底层数据结构：ArrayList是基于动态数组实现的，而LinkedList则是基于双向链表实现的。因此，在访问元素时，ArrayList是通过索引来直接定位数组中的元素，而LinkedList则需要从头或尾开始遍历链表，直到找到目标元素。
+2. 插入和删除操作的效率：由于ArrayList是基于动态数组实现的，所以在插入和删除元素时，需要移动后面的元素来填补空缺，这样会导致性能下降。而LinkedList在插入和删除元素时，只需要调整相邻节点的指针即可，因此更加高效。
+3. 访问元素的效率：由于ArrayList是基于数组实现的，因此它可以通过索引直接访问元素，并且具有非常好的随机访问性能。而LinkedList则需要从头或尾开始遍历链表，因此对于随机访问较慢。
+
+综上所述，如果需要频繁地进行插入和删除操作，则应该选择LinkedList；如果需要频繁进行随机访问，则应该选择ArrayList。
+##
+
+
+### HashMap和HashTable的区别
+HashMap和HashTable都是Java中用于实现键值对映射的数据结构，不同之处在于它们的线程安全性、迭代器以及继承关系等方面。
+1. 线程安全性：
+HashTable是一个线程安全的类，在多线程环境下可以安全地使用。它的所有方法都是同步的，即每次只有一个线程可以进入Hashtable的方法进行操作。
+而HashMap不是线程安全的类，在多线程环境下需要采取额外的措施来保证线程安全，比如使用synchronized关键字或者使用ConcurrentHashMap等线程安全的类。
+2. 迭代器：
+迭代器是访问集合元素的一种方式，HashTable的迭代器是Enumeration，而HashMap的迭代器是Iterator。Enumeration只能向前遍历集合，而Iterator可以实现向前或向后遍历集合。
+3. 继承关系：
+HashTable是Dictionary类的子类，而HashMap是AbstractMap类的子类。Dictionary类已经被弃用，所以推荐使用HashMap。
+
+另外，HashTable中不允许有null键或null值，而HashMap则可以有一个null键和任意数量的null值。
+因此，在单线程程序中，如果不需要线程安全的保障，建议使用HashMap，如果需要线程安全，可以使用HashTable或者ConcurrentHashMap。
+
+### Java中的四种引用
+在Java中，有四种类型的引用：强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）和虚引用（Phantom Reference）。
+1. 强引用（Strong Reference）：强引用是最常见的引用类型。当我们创建一个对象，并将其赋给一个变量时，该变量就成为该对象的强引用。只要强引用存在，垃圾回收器就不会回收这个对象。
+2. 软引用（Soft Reference）：软引用是一种比强引用弱化了一些的引用类型。当一个对象只被软引用引用时，在内存不足时，垃圾回收器会尝试回收这个对象。通常用于实现缓存的功能。
+3. 弱引用（Weak Reference）：弱引用比软引用更弱化了一些。当一个对象只被弱引用引用时，下次垃圾回收器运行时，无论当前内存是否充足，都会回收掉这个对象。通常用于实现某些特定功能，如ThreadLocal等。
+4. 虚引用（Phantom Reference）：虚引用是最弱化的一种引用类型。虚引用可以和一个引用队列（ReferenceQueue）一起使用，用于跟踪对象是否被垃圾回收器回收。虚引用本身的get()方法总是返回null，它不能被用来获取对象的引用。
+
+
+### OOM异常 Out of Memory
+1. 程序计数器是JVM内存模型中唯一不会出现OOM异常的内存区域
+2. Java堆内存异常
+   1. 内存泄漏：个别对象与GC Roots一直存在可达性通路，导致该对象占用的内存一直无法被回收
+   2. 内存不足：当创建的对象太多，或者某个大对象无法分配到足够的连续内存空间时，会导致堆内存溢出。
+   3. JVM参数配置不当：如果JVM参数设置不合理，比如堆内存大小设置得过小，也容易导致OOM异常。
+3. 虚拟机栈和本地方法栈溢出
+   1. 如果线程请求的栈深度超过JVM的最大限度，则会导致StackOverFlowError
+   2. 如果虚拟机栈在扩展栈时无法获取足够的空间，则会导致OOM
+4. 常量池溢出
+5. 方法区溢出
+
+### HashMap 与 ConcurrentHashMap 的异同
+1. 均是Key-Value的数据存储形式
+2. HashMap是线程不安全的，而ConcurrentHashMap是线程安全的
+3. HashMap的底层实现在1.8之前是链表加数组，1.8之后是链表加数组加红黑树
+4. ConcurrentHashMap的底层实现是Node + CAS + Synchronized
