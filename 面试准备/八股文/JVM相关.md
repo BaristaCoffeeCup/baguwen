@@ -187,8 +187,7 @@ __7. G1收集器__
 ## 什么时候会触发Full GC
 - 老年代空间不足：当新生代的对象晋升入老年代或者创建了大对象(大对象直接放入老年代)时，可能会导致老年代的空间不足，从而导致Full GC。为了避免上诉情况，需要尽量避免创建大对象以及使对象在新生代的存活时间尽量长一些。
 - 永久代空间不足：   
-- CMS GC时出现promotion failed和concurrent mode failure：`promotion failed`是在进行Minor GC时，survivor space放不下、对象只能放入旧生代，而此时旧生代也放不下造成的；`concurrent
-mode failure`是在执行CMS GC的过程中同时有对象要放入旧生代，而此时旧生代空间不足造成的。
+- CMS GC时出现promotion failed和concurrent mode failure：`promotion failed`是在进行Minor GC时，survivor space放不下、对象只能放入旧生代，而此时旧生代也放不下造成的；`concurrent mode failure`是在执行CMS GC的过程中同时有对象要放入旧生代，而此时旧生代空间不足造成的。
 - 统计得到的Minor GC晋升到旧生代的平均大小大于旧生代的剩余空间
 
 
