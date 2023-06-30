@@ -22,7 +22,6 @@ Redis是一款内存高速缓存数据库。Redis全称为：Remote Dictionary S
 
 <br>
 
-
 ## Redis的数据结构
 ### 5种基础数据结构
 ![Redis基础数据类型](../八股文/图例/Redis基础数据类型.png)
@@ -30,7 +29,6 @@ Redis是一款内存高速缓存数据库。Redis全称为：Remote Dictionary S
 - HyperLogLogs（基数统计）
 - Bitmap （位存储）
 - geospatial (地理位置)
-
 
 <br>
 
