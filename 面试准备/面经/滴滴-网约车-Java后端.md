@@ -315,7 +315,30 @@ public ListNode deleteDuplicates(ListNode head) {
 ```
 
 ## 9. 股票买卖最大价格
-```
+``` java
+
+public int maxPrice(int[] prices){
+
+    int[][] dp = new int[prices.length + 1][2];
+
+    // 初始化 第一天持有股票的收益为-price
+    dp[0][1] = -price[0];
+
+    // dp[i][0] 表示第i天持有股票时的最大收益
+    // dp[i][1] 表示第i天没有持有股票的最大收益
+
+    for(int i = 1;i < prices.length;i++){
+        // 第i天持有股票的收益分两种情况，持续持有或买进
+        dp[i][0] = Math.max(dp[i-1][0], -price[i]);
+        // 第i天未持有股票的收益情况分为持续不持有或卖出
+        dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] + price[i]);
+    }
+
+    // 返回最后一天不持有的收益
+    return dp[price.length - 1][1];
+
+}
+
 
 ```
 
@@ -325,12 +348,122 @@ public ListNode deleteDuplicates(ListNode head) {
 ```
 
 ## 11. 二叉搜索树判断
-```
+``` java
+public boolean isValidBST(TreeNode root) {
+    
+    // 记录二叉树中序遍历结果
+    List<Integer> ans = new ArrayList<>();
 
+    // 辅助栈
+    Stack<TreeNode> stack = new Stack<>();
+
+    TreeNode cur = root;
+
+    while(cur != null || !stack.isEmpty()) {
+        // 左子节点不为空，则持续入栈，并将指针移动到左子节点
+        if(cur != null) {
+            stack.push(cur);
+            cur = cur.left;
+        }
+        // 左节点为空，则回溯至中间节点
+        else {
+            TreeNode top = stack.pop();
+            // 左子节点大于中间节点，不是搜索树
+            if(ans.size() > 0 && top.val <= ans.get(ans.size()-1)){
+                return false;
+            }
+            // 记录中序遍历序列
+            ans.add(top.val);
+            // 节点移动至右节点
+            cur = top.right;
+        }
+    }
+
+    return true;
+}
 ```
 
 ## 12. 二叉树非迭代后续遍历
-```
+``` java
+
+// 前序遍历
+public List<Integer> preOrderTraversal(TreeNode root) {
+
+    List<Integer> ans = new ArrayList<>();
+
+    Stack<Integer> myStack = new Stack<>();
+    myStack.push(root);
+
+    while(!myStack.isEmpty()) {
+        TreeNode top = myStack.pop();
+
+        ans.add(top.val);
+
+        if(top.right != null) {
+            myStack.push(top.right);
+        }
+
+        if(top.left != null) {
+            myStack.push(top.left);
+        }
+    }
+
+    return ans;
+}
+
+
+// 中序遍历
+public List<Integer> inorderTraversal(TreeNode root){
+
+    List<Integer> ans = new ArrayList<>();
+
+    Stack<Integer> myStack = new Stack<>();
+
+    TreeNode cur = root;
+
+    while(cur != null || !myStack.isEmpty()) {
+        if(cur != null) {
+            myStack.push(cur);
+            cur = cur.left;
+        }
+        else {
+            TreeNode top = myStack.pop();
+            ans.add(top.val);
+            cur = top.right;
+        }
+    }
+
+    return ans;
+}
+
+
+// 后续遍历
+public List<Integer> postorderTraversal(TreeNode root) {
+
+    List<Integer> ans = new ArrayList<>();
+
+    Stack<Integer> myStack = new Stack<>();
+    myStack.push(root);
+
+    // 前序遍历的出栈顺序是中左右，所以入栈顺序是右左中
+    // 后续遍历的出栈顺序是左右中，所以需要保证出栈顺序是中右左，再取反
+    while(!myStack.isEmpty()) {
+        
+        TreeNode top = myStack.pop();
+        ans.add(top.val);
+
+        if(top.left != null) {
+            myStack.push(top.left);
+        }
+
+        if(top.right != null) {
+            myStack.push(top.right);
+        }
+
+    }
+
+    return ans;
+}
 
 ```
 
