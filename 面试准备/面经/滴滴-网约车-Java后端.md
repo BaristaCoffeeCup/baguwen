@@ -169,12 +169,90 @@ public static void swap(int[] arr, int i, int j){
 ```
 
 ## 5. 在矩阵字符串中找到字符串的存在路径
-```
+``` java
+
+public boolean exist(char[][] board, String word) {
+    if (board == null || board.length == 0 || board[0].length == 0) {
+        return false;
+    }
+
+    int rows = board.length;
+    int cols = board[0].length;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (backtrack(board, word, i, j, 0)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+private static boolean backtrack(char[][] board, int i, int j, int index){
+
+    // 判断是否找到了目标字符串
+    if(index == word.length) {
+        return true;
+    }
+
+    // 判断边界
+    if(i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != word.cahrAt(index)) {
+        return false;
+    }
+
+    // 新找到一个字符，避免搜索回头，将当前这个字符临时设置为# 
+    char temp = board[i][j];
+    board[i][j] = '#';
+
+    boolean found = backtrack(board, word, row - 1, col, index + 1)
+                || backtrack(board, word, row + 1, col, index + 1)
+                || backtrack(board, word, row, col - 1, index + 1)
+                || backtrack(board, word, row, col + 1, index + 1);
+
+    // 恢复状态
+    board[i][j] = temp;
+
+    return found;
+
+}
 
 ```
 
 ## 6. 写一个带有TTL机制的map
-```
+``` java
+
+import java.util.Map;
+import java.util.concurrent.*;
+
+public class TTLMap<K, V> {
+    private final Map<K, V> map;
+    private final ScheduledExecutorService scheduler;
+
+    public TTLMap() {
+        map = new ConcurrentHashMap<>();
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+    }
+
+    public void put(K key, V value, long ttl) {
+        map.put(key, value);
+        scheduler.schedule(() -> map.remove(key), ttl, TimeUnit.MILLISECONDS);
+    }
+
+    public V get(K key) {
+        return map.get(key);
+    }
+
+    public void remove(K key) {
+        map.remove(key);
+    }
+
+    public int size() {
+        return map.size();
+    }
+}
 
 ```
 
@@ -184,7 +262,55 @@ public static void swap(int[] arr, int i, int j){
 ```
 
 ## 8. 有序链表去重
-```
+``` java
+// 删除所有重复数字，仅保留一个
+public ListNode deleteDuplicates(ListNode head) {
+
+    if(head == null) {
+        return null;
+    }
+
+    if(head.next == null) {
+        return head;
+    }
+
+    // ListNode preNode = head;
+    ListNode cur = head;
+
+    while(cur.next != null) {
+        if(cur.val == cur.next.val){
+            cur.next = cur.next.next;
+        }
+        else {
+            cur = cur.next;
+        }
+    }
+
+    return head;
+}
+
+// 删除所有重复的数据，仅保留不重复的
+public ListNode deleteDuplicates(ListNode head) {
+    if (head == null) {
+        return head;
+    }
+    
+    ListNode dummy = new ListNode(0, head);
+
+    ListNode cur = dummy;
+    while (cur.next != null && cur.next.next != null) {
+        if (cur.next.val == cur.next.next.val) {
+            int x = cur.next.val;
+            while (cur.next != null && cur.next.val == x) {
+                cur.next = cur.next.next;
+            }
+        } else {
+            cur = cur.next;
+        }
+    }
+
+    return dummy.next;
+}
 
 ```
 
