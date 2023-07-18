@@ -468,7 +468,24 @@ public List<Integer> postorderTraversal(TreeNode root) {
 ```
 
 ## 13. 数组中的零移动到数组后方
-```
+``` java
+
+public void moveZeroes(int[] nums) {
+    if(nums.length == 0 || nums.length == 1) {
+        return;
+    }
+
+    for(int i = 0;i < nums.length;i++) {
+        if(nums[i] == 0) {
+            for(int j = i + 1; j < nums.length;j++) {
+                if(nums[j] != 0){
+                    nums[i] = nums[j]; 
+                    nums[j] = 0;
+                }
+            }
+        }
+    }
+}
 
 ```
 
