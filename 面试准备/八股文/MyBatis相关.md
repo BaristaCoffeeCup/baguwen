@@ -18,8 +18,7 @@
 <br>
 
 ## Mybatis是如何进行分页的？分页插件的原理是什么？
-- 第一种，直接在 Select 语句上增加数据库提供的分页关键字，然后在应用程序里
-面传递当前页，以及每页展示条数即可，比如limit，offset。
+- 第一种，直接在 Select 语句上增加数据库提供的分页关键字，然后在应用程序里面传递当前页，以及每页展示条数即可，比如limit，offset。
 - 第二种，使用 Mybatis 提供的 RowBounds 对象，实现内存级别分页。
 - 第三种，基于 Mybatis 里面的 Interceptor 拦截器，在 select 语句执行之前动态拼接分页关键字（分页插件PageHelper的原理）。
 

@@ -237,7 +237,15 @@ Spring IOC（Inversion of Control，控制反转）是Spring框架的核心概�
 回答：当一个方法被标记为@Transactional并且抛出了RuntimeException或Error时，Spring会自动回滚事务。此外，可以通过编程方式调用TransactionStatus的setRollbackOnly()方法来手动回滚事务。
 
 
-
+## Spring如何解决循环依赖
+1. 提前暴露半成品Bean（Early Dependency Injection）：
+- 当检测到循环依赖时，Spring容器会提前将正在创建的Bean进行实例化，但还未完成依赖注入。
+- Spring容器会将这个尚未完成依赖注入的Bean暴露给其他正在创建的Bean使用。
+- 当依赖的Bean创建完成后，再将依赖注入到半成品Bean中，完成整个循环依赖的注入。
+2. 使用代理：
+- 当检测到循环依赖时，Spring容器会使用代理对象来替代真正的Bean。
+- 通过代理对象，可以延迟获取依赖的Bean实例。
+- 当真正的Bean创建完成后，通过代理对象将依赖注入到其他Bean中。
 
 
 
