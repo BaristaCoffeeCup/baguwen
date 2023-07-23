@@ -196,6 +196,31 @@ Spring IOC（Inversion of Control，控制反转）是Spring框架的核心概�
 - session：与request范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。
 - global-session：全局作用域
 
+``` java
+class LazySingleton {
+
+  private static volatile LazySingleton instance;
+
+  private LazySingleton() {
+      // 私有构造方法
+  }
+
+  public static LazySingleton getInstance(){
+    if(this.instance == null){
+      synchronized(LazySingleton.class){
+        if(this.instance == null){
+          this.instance = new LazySingleton();
+        }
+      }
+    }
+
+    return this.instance;
+  }
+}
+
+
+```
+
 <br>
 
 
